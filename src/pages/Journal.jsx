@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 
 const moodOptions = [
   { value: 'very_happy', label: 'Very Happy', emoji: '😄' },
@@ -11,7 +9,6 @@ const moodOptions = [
 ];
 
 export const Journal = () => {
-  const { user } = useAuth();
   const [journals, setJournals] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingJournal, setEditingJournal] = useState(null);
@@ -25,18 +22,18 @@ export const Journal = () => {
   }, [user]);
 
   const loadJournals = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('journals')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('date', { ascending: false });
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('journals')
+  //       .select('*')
+  //       .eq('user_id', user.id)
+  //       .order('date', { ascending: false });
 
-      if (error) throw error;
-      setJournals(data || []);
-    } catch (error) {
-      console.error('Error loading journals:', error);
-    }
+  //     if (error) throw error;
+  //     setJournals(data || []);
+  //   } catch (error) {
+  //     console.error('Error loading journals:', error);
+  //   }
   };
 
   const handleOpenModal = (journal = null) => {
@@ -66,42 +63,42 @@ export const Journal = () => {
     if (!title.trim()) return;
 
     setLoading(true);
-    try {
-      if (editingJournal) {
-        const { error } = await supabase
-          .from('journals')
-          .update({
-            mood,
-            title,
-            description,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', editingJournal.id);
+  //   try {
+  //     if (editingJournal) {
+  //       const { error } = await supabase
+  //         .from('journals')
+  //         .update({
+  //           mood,
+  //           title,
+  //           description,
+  //           updated_at: new Date().toISOString(),
+  //         })
+  //         .eq('id', editingJournal.id);
 
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from('journals')
-          .insert([
-            {
-              user_id: user.id,
-              mood,
-              title,
-              description,
-              date: new Date().toISOString().split('T')[0],
-            },
-          ]);
+  //       if (error) throw error;
+  //     } else {
+  //       const { error } = await supabase
+  //         .from('journals')
+  //         .insert([
+  //           {
+  //             user_id: user.id,
+  //             mood,
+  //             title,
+  //             description,
+  //             date: new Date().toISOString().split('T')[0],
+  //           },
+  //         ]);
 
-        if (error) throw error;
-      }
+  //       if (error) throw error;
+  //     }
 
-      await loadJournals();
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error saving journal:', error);
-    } finally {
-      setLoading(false);
-    }
+  //     await loadJournals();
+  //     handleCloseModal();
+  //   } catch (error) {
+  //     console.error('Error saving journal:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
   };
 
   const getMoodInfo = (moodValue) => {

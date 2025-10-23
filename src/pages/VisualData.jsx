@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+// import { useAuth } from '../contexts/AuthContext';
+// import { supabase } from '../lib/supabase';
 
 export const VisualData = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [avgSleepHours, setAvgSleepHours] = useState(0);
   const [avgMealsPerDay, setAvgMealsPerDay] = useState(0);
   const [avgScreenTime, setAvgScreenTime] = useState(0);
@@ -15,36 +15,36 @@ export const VisualData = () => {
   }, [user]);
 
   const loadStatistics = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('daily_health_data')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('date', { ascending: false })
-        .limit(30);
+    // try {
+    //   const { data, error } = await supabase
+    //     .from('daily_health_data')
+    //     .select('*')
+    //     .eq('user_id', user.id)
+    //     .order('date', { ascending: false })
+    //     .limit(30);
 
-      if (error) throw error;
+    //   if (error) throw error;
 
-      if (data && data.length > 0) {
-        const totalSleep = data.reduce((sum, d) => sum + (parseFloat(d.sleep_hours) || 0), 0);
-        const avgSleep = (totalSleep / data.length).toFixed(1);
-        setAvgSleepHours(avgSleep);
+    //   if (data && data.length > 0) {
+    //     const totalSleep = data.reduce((sum, d) => sum + (parseFloat(d.sleep_hours) || 0), 0);
+    //     const avgSleep = (totalSleep / data.length).toFixed(1);
+    //     setAvgSleepHours(avgSleep);
 
-        const totalMeals = data.reduce((sum, d) => sum + (d.meals?.length || 0), 0);
-        const avgMeals = (totalMeals / data.length).toFixed(1);
-        setAvgMealsPerDay(avgMeals);
+    //     const totalMeals = data.reduce((sum, d) => sum + (d.meals?.length || 0), 0);
+    //     const avgMeals = (totalMeals / data.length).toFixed(1);
+    //     setAvgMealsPerDay(avgMeals);
 
-        const totalScreen = data.reduce((sum, d) => sum + (parseFloat(d.screen_time_hours) || 0), 0);
-        const avgScreen = (totalScreen / data.length).toFixed(1);
-        setAvgScreenTime(avgScreen);
+    //     const totalScreen = data.reduce((sum, d) => sum + (parseFloat(d.screen_time_hours) || 0), 0);
+    //     const avgScreen = (totalScreen / data.length).toFixed(1);
+    //     setAvgScreenTime(avgScreen);
 
-        calculateLifestyleStatus(avgSleep, avgMeals, avgScreen);
-      }
-    } catch (error) {
-      console.error('Error loading statistics:', error);
-    } finally {
-      setLoading(false);
-    }
+    //     calculateLifestyleStatus(avgSleep, avgMeals, avgScreen);
+    //   }
+    // } catch (error) {
+    //   console.error('Error loading statistics:', error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const calculateLifestyleStatus = (sleep, meals, screen) => {

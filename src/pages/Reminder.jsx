@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 
 export const Reminder = () => {
-  const { user } = useAuth();
   const [reminders, setReminders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,20 +9,20 @@ export const Reminder = () => {
   }, [user]);
 
   const loadReminders = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('reminders')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('date', { ascending: false });
+    // try {
+    //   const { data, error } = await supabase
+    //     .from('reminders')
+    //     .select('*')
+    //     .eq('user_id', user.id)
+    //     .order('date', { ascending: false });
 
-      if (error) throw error;
-      setReminders(data || []);
-    } catch (error) {
-      console.error('Error loading reminders:', error);
-    } finally {
-      setLoading(false);
-    }
+    //   if (error) throw error;
+    //   setReminders(data || []);
+    // } catch (error) {
+    //   console.error('Error loading reminders:', error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const formatDate = (dateString) => {
