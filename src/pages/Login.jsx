@@ -21,7 +21,10 @@ export const Login = () => {
     setLoading(true);
 
     try {
-      await userLogin(formData);
+      const userData = await userLogin(formData);
+      localStorage.setItem('token', userData.data.user.token);
+      localStorage.setItem('username', userData.data.user.username);
+      localStorage.setItem('email', userData.data.user.email);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Failed to login');
