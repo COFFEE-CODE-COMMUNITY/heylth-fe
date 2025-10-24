@@ -1,21 +1,19 @@
 import { useState, useEffect } from 'react';
-import { getAllSleepTracker } from '../services/sleepTrackerService';
+import { addSleepTracker, getAllSleepTracker } from '../services/sleepTrackerService';
 import { getAllEatTracker } from '../services/eatTrackerService';
 import { getAllScreenTime } from '../services/screenTimeTrackerService';
 
 export const Dashboard = () => {
-  const [sleepStart, setSleepStart] = useState('');
-  const [sleepStartPeriod, setSleepStartPeriod] = useState('PM');
-  const [sleepEnd, setSleepEnd] = useState('');
-  const [sleepEndPeriod, setSleepEndPeriod] = useState('AM');
+  const [sleep, setSleep] = useState({
+    sleep_start: 23,
+    sleep_end: 0,
+  });
   const [meals, setMeals] = useState([]);
   const [screenTime, setScreenTime] = useState('');
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
         const [sleepData, eatDAData, screeData] = await Promise.all([
           getAllSleepTracker(),
@@ -24,6 +22,7 @@ export const Dashboard = () => {
         ]);
 
         setSleepStart(sleepData);
+        
       } catch (error) {
         
       }
@@ -56,73 +55,41 @@ export const Dashboard = () => {
     // }
   };
 
+  const handleChange = (field, value) => {
+    setSleep(prev => ({...prev, [field]: value}));
+  };
+
   const saveSleepData = async () => {
-    setLoading(true);
     try {
-      const today = new Date().toISOString().split('T')[0];
-
-      const sleepHours = calculateSleepHours(
-        sleepStart,
-        sleepStartPeriod,
-        sleepEnd,
-        sleepEndPeriod
-      );
-
-      const { error } = await supabase
-        .from('daily_health_data')
-        .upsert({
-          user_id: user.id,
-          date: today,
-          sleep_start: sleepStart,
-          sleep_start_period: sleepStartPeriod,
-          sleep_end: sleepEnd,
-          sleep_end_period: sleepEndPeriod,
-          sleep_hours: sleepHours,
-          updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id,date'
-        });
-
-      if (error) throw error;
+      const data = {
+        sleep_start: parseInt(sleep.sleep_start),
+        sleep_end: parseInt(sleep.sleep_end),
+      };
+      
+      await addSleepTracker(data);
       setMessage('Sleep data saved!');
       setTimeout(() => setMessage(''), 3000);
-      generateReminder();
+      // generateReminder();
     } catch (error) {
       console.error('Error saving sleep data:', error);
     } finally {
-      setLoading(false);
     }
   };
 
   const saveMealsData = async () => {
-    setLoading(true);
     try {
-      const today = new Date().toISOString().split('T')[0];
-
-      const { error } = await supabase
-        .from('daily_health_data')
-        .upsert({
-          user_id: user.id,
-          date: today,
-          meals: meals,
-          updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id,date'
-        });
-
-      if (error) throw error;
+      const data = {
+        
+      }
       setMessage('Meals data saved!');
       setTimeout(() => setMessage(''), 3000);
-      generateReminder();
+      // generateReminder();
     } catch (error) {
       console.error('Error saving meals data:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
   const saveScreenTimeData = async () => {
-    setLoading(true);
     try {
       const today = new Date().toISOString().split('T')[0];
 
@@ -143,27 +110,25 @@ export const Dashboard = () => {
       generateReminder();
     } catch (error) {
       console.error('Error saving screen time:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const calculateSleepHours = (start, startPeriod, end, endPeriod) => {
-    if (!start || !end) return 0;
+  // const calculateSleepHours = (start, startPeriod, end, endPeriod) => {
+  //   if (!start || !end) return 0;
 
-    let [startHour, startMin] = start.split(':').map(Number);
-    let [endHour, endMin] = end.split(':').map(Number);
+  //   let [startHour, startMin] = start.split(':').map(Number);
+  //   let [endHour, endMin] = end.split(':').map(Number);
 
-    if (startPeriod === 'PM' && startHour !== 12) startHour += 12;
-    if (startPeriod === 'AM' && startHour === 12) startHour = 0;
-    if (endPeriod === 'PM' && endHour !== 12) endHour += 12;
-    if (endPeriod === 'AM' && endHour === 12) endHour = 0;
+  //   if (startPeriod === 'PM' && startHour !== 12) startHour += 12;
+  //   if (startPeriod === 'AM' && startHour === 12) startHour = 0;
+  //   if (endPeriod === 'PM' && endHour !== 12) endHour += 12;
+  //   if (endPeriod === 'AM' && endHour === 12) endHour = 0;
 
-    let totalMinutes = (endHour * 60 + endMin) - (startHour * 60 + startMin);
-    if (totalMinutes < 0) totalMinutes += 24 * 60;
+  //   let totalMinutes = (endHour * 60 + endMin) - (startHour * 60 + startMin);
+  //   if (totalMinutes < 0) totalMinutes += 24 * 60;
 
-    return (totalMinutes / 60).toFixed(1);
-  };
+  //   return (totalMinutes / 60).toFixed(1);
+  // };
 
   const generateReminder = async () => {
     // try {
@@ -251,24 +216,21 @@ export const Dashboard = () => {
             <label className="block text-gray-700 mb-2">Sleep Start</label>
             <div className="flex gap-2">
               <select
-                value={sleepStart}
-                onChange={(e) => setSleepStart(e.target.value)}
+                value={sleep.sleep_start}
+                onChange={(e) => handleChange('sleep_start', e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               >
-                {[...Array(12)].map((_, i) => (
-                  <option key={i + 1} value={`${i + 1}:00`}>
-                    {i + 1}:00
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={sleepStartPeriod}
-                onChange={(e) => setSleepStartPeriod(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
+                {[...Array(24)].map((_, i) => {
+                  // console.log(i);
+                  const hour = 23 - i;
+                  // console.log(hour)
+                  const formattedHour = hour.toString().padStart(2, '0');
+                  return (
+                    <option key={hour} value={`${formattedHour}`}>
+                      {formattedHour}:00
+                    </option>
+                  )
+                })}
               </select>
             </div>
           </div>
@@ -277,24 +239,18 @@ export const Dashboard = () => {
             <label className="block text-gray-700 mb-2">Sleep End</label>
             <div className="flex gap-2">
               <select
-                value={sleepEnd}
-                onChange={(e) => setSleepEnd(e.target.value)}
+                value={sleep.sleep_end}
+                onChange={(e) => handleChange('sleep_end', e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               >
-                {[...Array(12)].map((_, i) => (
-                  <option key={i + 1} value={`${i + 1}:00`}>
-                    {i + 1}:00
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={sleepEndPeriod}
-                onChange={(e) => setSleepEndPeriod(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
+                {[...Array(24)].map((_, i) => {
+                  const hour = i.toString().padStart(2, '0');
+                  return (
+                    <option key={i} value={`${hour}`}>
+                      {hour}:00
+                    </option>
+                  )
+                })}
               </select>
             </div>
           </div>
@@ -302,7 +258,6 @@ export const Dashboard = () => {
 
         <button
           onClick={saveSleepData}
-          disabled={loading}
           className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
         >
           Save
@@ -331,7 +286,6 @@ export const Dashboard = () => {
 
         <button
           onClick={saveMealsData}
-          disabled={loading}
           className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
         >
           Save
@@ -358,20 +312,11 @@ export const Dashboard = () => {
 
         <button
           onClick={saveScreenTimeData}
-          disabled={loading}
           className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
         >
           Save
         </button>
       </div>
-
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full bg-[#007DFC] text-white py-3 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50 font-semibold"
-      >
-        Submit All
-      </button>
     </div>
   </div>
 );
