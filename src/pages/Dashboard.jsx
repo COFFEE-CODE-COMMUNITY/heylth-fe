@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-// import { useAuth } from '../contexts/AuthContext';
-// import { supabase } from '../lib/supabase';
+import { getAllSleepTracker } from '../services/sleepTrackerService';
+import { getAllEatTracker } from '../services/eatTrackerService';
+import { getAllScreenTime } from '../services/screenTimeTrackerService';
 
 export const Dashboard = () => {
-  // const { user } = useAuth();
   const [sleepStart, setSleepStart] = useState('');
   const [sleepStartPeriod, setSleepStartPeriod] = useState('PM');
   const [sleepEnd, setSleepEnd] = useState('');
@@ -14,8 +14,22 @@ export const Dashboard = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    loadTodayData();
-  }, [user]);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [sleepData, eatDAData, screeData] = await Promise.all([
+          getAllSleepTracker(),
+          getAllEatTracker(),
+          getAllScreenTime(),
+        ]);
+
+        setSleepStart(sleepData);
+      } catch (error) {
+        
+      }
+    };
+    fetchData();
+  }, []);
 
   const loadTodayData = async () => {
     // try {
