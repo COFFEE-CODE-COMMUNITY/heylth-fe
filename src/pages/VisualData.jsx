@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
+import { getAverageSleep } from '../services/sleepTrackerService';
 // import { useAuth } from '../contexts/AuthContext';
-// import { supabase } from '../lib/supabase';
 
 export const VisualData = () => {
-  // const { user } = useAuth();
   const [avgSleepHours, setAvgSleepHours] = useState(0);
   const [avgMealsPerDay, setAvgMealsPerDay] = useState(0);
   const [avgScreenTime, setAvgScreenTime] = useState(0);
@@ -11,19 +10,18 @@ export const VisualData = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    averageSleepHours();
     loadStatistics();
-  }, [user]);
+  }, []);
 
+  const averageSleepHours = async () => {
+    const avgSleep = await getAverageSleep();
+    setAvgSleepHours(avgSleep.average_sleep);
+  };
+
+  
   const loadStatistics = async () => {
     // try {
-    //   const { data, error } = await supabase
-    //     .from('daily_health_data')
-    //     .select('*')
-    //     .eq('user_id', user.id)
-    //     .order('date', { ascending: false })
-    //     .limit(30);
-
-    //   if (error) throw error;
 
     //   if (data && data.length > 0) {
     //     const totalSleep = data.reduce((sum, d) => sum + (parseFloat(d.sleep_hours) || 0), 0);
@@ -63,13 +61,13 @@ export const VisualData = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-[#007DFC] text-xl">Loading...</div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-64">
+  //       <div className="text-[#007DFC] text-xl">Loading...</div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
