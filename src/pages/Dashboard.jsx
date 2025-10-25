@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { addSleepTracker, getAllSleepTracker } from '../services/sleepTrackerService';
-import { getAllEatTracker } from '../services/eatTrackerService';
-import { getAllScreenTime } from '../services/screenTimeTrackerService';
+import { addEatTracker, getAllEatTracker } from '../services/eatTrackerService';
+import { addScreenTime, getAllScreenTime } from '../services/screenTimeTrackerService';
 
 export const Dashboard = () => {
   const [sleep, setSleep] = useState({
     sleep_start: 23,
     sleep_end: 0,
   });
-  const [meals, setMeals] = useState([]);
+  const [meal, setMeal] = useState('');
   const [screenTime, setScreenTime] = useState('');
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,67 +69,84 @@ export const Dashboard = () => {
       
       await addSleepTracker(data);
       setMessage('Sleep data saved!');
-      setTimeout(() => setMessage(''), 3000);
+      setMessageType('success');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
+
+      setSleep({
+        sleep_start: 23,
+        sleep_end: 0,
+      });
       // generateReminder();
     } catch (error) {
-      console.error('Error saving sleep data:', error);
-    } finally {
+      const errMessage = error?.response?.data?.error || 'Error saving sleep data!';
+      setMessage(errMessage);
+      setMessageType('error');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
+      setSleep({
+        sleep_start: 23,
+        sleep_end: 0,
+      });
     }
   };
 
   const saveMealsData = async () => {
     try {
-      const data = {
-        
-      }
-      setMessage('Meals data saved!');
-      setTimeout(() => setMessage(''), 3000);
+      const data = { meal_type: meal };
+      
+      await addEatTracker(data);
+      setMessage('Meal data saved!');
+      setMessageType('success');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
+
+      setMeal('');
       // generateReminder();
     } catch (error) {
-      console.error('Error saving meals data:', error);
+      const errMessage = error?.response?.data?.error || 'Error saving meal data!';
+      setMessage(errMessage);
+      setMessageType('error');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
+      setMeal('');
     }
   };
 
   const saveScreenTimeData = async () => {
     try {
-      const today = new Date().toISOString().split('T')[0];
+      const data = { duration: parseInt(screenTime) };
+      
+      await addScreenTime(data);
+      setMessage('Screen time data saved!');
+      setMessageType('success');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
 
-      const { error } = await supabase
-        .from('daily_health_data')
-        .upsert({
-          user_id: user.id,
-          date: today,
-          screen_time_hours: parseFloat(screenTime) || 0,
-          updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id,date'
-        });
-
-      if (error) throw error;
-      setMessage('Screen time saved!');
-      setTimeout(() => setMessage(''), 3000);
-      generateReminder();
+      setScreenTime('');
+      // generateReminder();
     } catch (error) {
-      console.error('Error saving screen time:', error);
+      const errMessage = error?.response?.data?.error || 'Error saving meal data!';
+      setMessage(errMessage);
+      setMessageType('error');
+      setTimeout(() => {
+        setMessage('');
+        setMessageType('');
+      }, 3000);
+      setScreenTime('');
     }
   };
 
-  // const calculateSleepHours = (start, startPeriod, end, endPeriod) => {
-  //   if (!start || !end) return 0;
-
-  //   let [startHour, startMin] = start.split(':').map(Number);
-  //   let [endHour, endMin] = end.split(':').map(Number);
-
-  //   if (startPeriod === 'PM' && startHour !== 12) startHour += 12;
-  //   if (startPeriod === 'AM' && startHour === 12) startHour = 0;
-  //   if (endPeriod === 'PM' && endHour !== 12) endHour += 12;
-  //   if (endPeriod === 'AM' && endHour === 12) endHour = 0;
-
-  //   let totalMinutes = (endHour * 60 + endMin) - (startHour * 60 + startMin);
-  //   if (totalMinutes < 0) totalMinutes += 24 * 60;
-
-  //   return (totalMinutes / 60).toFixed(1);
-  // };
 
   const generateReminder = async () => {
     // try {
@@ -181,28 +199,21 @@ export const Dashboard = () => {
     // }
   };
 
-  const toggleMeal = (meal) => {
-    if (meals.includes(meal)) {
-      setMeals(meals.filter((m) => m !== meal));
-    } else {
-      setMeals([...meals, meal]);
-    }
-  };
-
-  const handleSubmit = async () => {
-    await saveSleepData();
-    await saveMealsData();
-    await saveScreenTimeData();
-  };
-
   return (
   <div className="max-w-3xl">
     <h1 className="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
 
     {message && (
-      <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+      <div
+        className={`px-4 py-3 rounded mb-6 border ${
+          messageType === 'success'
+            ? 'bg-green-100 border-green-400 text-green-700'
+            : 'bg-red-100 border-red-400 text-red-700'
+        }`}
+      >
         {message}
       </div>
+
     )}
 
     <div className="space-y-8">
@@ -269,17 +280,17 @@ export const Dashboard = () => {
         <h2 className="text-xl font-semibold mb-4">Which Meals Did You Have?</h2>
 
         <div className="flex flex-wrap gap-3">
-          {['Breakfast', 'Lunch', 'Dinner'].map((meal) => (
+          {['Breakfast', 'Lunch', 'Dinner'].map((m) => (
             <button
-              key={meal}
-              onClick={() => toggleMeal(meal)}
+              key={m}
+              onClick={() => setMeal(m)}
               className={`px-6 py-2 rounded-lg transition-colors ${
-                meals.includes(meal)
+                meal === m
                   ? 'bg-[#007DFC] text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              {meal}
+              {m}
             </button>
           ))}
         </div>
