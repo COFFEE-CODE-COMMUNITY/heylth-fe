@@ -22,9 +22,12 @@ export const Login = () => {
 
     try {
       const userData = await userLogin(formData);
+      console.log(userData);
       localStorage.setItem('token', userData.data.user.token);
-      localStorage.setItem('username', userData.data.user.username);
       localStorage.setItem('email', userData.data.user.email);
+      localStorage.setItem('username', userData.data.user.username);
+      localStorage.setItem('age', userData.data.user.age);
+      localStorage.setItem('sex', userData.data.user.sex);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Failed to login');
