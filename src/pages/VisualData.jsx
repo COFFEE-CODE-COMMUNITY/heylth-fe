@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAverageSleep } from '../services/sleepTrackerService';
-// import { useAuth } from '../contexts/AuthContext';
+import { countEatTracker } from '../services/eatTrackerService';
+import { getAverageScreenTime } from '../services/screenTimeTrackerService';
 
 export const VisualData = () => {
   const [avgSleepHours, setAvgSleepHours] = useState(0);
@@ -11,7 +12,9 @@ export const VisualData = () => {
 
   useEffect(() => {
     averageSleepHours();
-    loadStatistics();
+    countMeal();
+    averageScreenTime();
+    // loadStatistics();
   }, []);
 
   const averageSleepHours = async () => {
@@ -19,7 +22,16 @@ export const VisualData = () => {
     setAvgSleepHours(avgSleep.average_sleep);
   };
 
-  
+  const countMeal = async () => {
+    const meal = await countEatTracker();
+    setAvgMealsPerDay(meal.count_meal);
+  };
+
+  const averageScreenTime = async () => {
+    const avgScreenTime = await getAverageScreenTime();
+    setAvgScreenTime(avgScreenTime.average_screen_time);
+  };
+
   const loadStatistics = async () => {
     // try {
 
