@@ -11,6 +11,11 @@ export const Profile = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const username = localStorage.getItem('username');
+  const email = localStorage.getItem('email');
+  const age = localStorage.getItem('age');
+  const sex = localStorage.getItem('sex');
+
   const handleChangePassword = async () => {
     setError('');
     setMessage('');
@@ -142,26 +147,22 @@ export const Profile = () => {
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Username</label>
-            <div className="text-gray-800 font-medium">Arvin</div>
-            {/* <div className="text-gray-800 font-medium">{profile?.username || 'Not set'}</div> */}
+            <div className="text-gray-800 font-medium">{username || 'Not set'}</div>
           </div>
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Email</label>
-            <div className="text-gray-800 font-medium">arvin@gmail.com</div>
-            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
+            <div className="text-gray-800 font-medium">{email || 'Not set'}</div>
           </div>
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Umur</label>
-            <div className="text-gray-800 font-medium">17 Tahun</div>
-            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
+            <div className="text-gray-800 font-medium">{age || 'Not set'} Tahun</div>
           </div>
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Sex</label>
-            <div className="text-gray-800 font-medium">Laki-Laki</div>
-            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
+            <div className="text-gray-800 font-medium">{sex || 'Not set'}</div>
           </div>
         </div>
 
