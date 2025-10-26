@@ -6,7 +6,7 @@ export const Reminder = () => {
 
   useEffect(() => {
     loadReminders();
-  }, [user]);
+  }, []);
 
   const loadReminders = async () => {
     // try {
@@ -35,13 +35,13 @@ export const Reminder = () => {
     });
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-[#007DFC] text-xl">Loading...</div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-64">
+  //       <div className="text-[#007DFC] text-xl">Loading...</div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>

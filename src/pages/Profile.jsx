@@ -1,9 +1,7 @@
 import { useState } from 'react';
-// import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
-  // const { user, profile, signOut, updatePassword } = useAuth();
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -131,24 +129,39 @@ export const Profile = () => {
       <div className="bg-white p-6 rounded-lg shadow">
         <div className="flex flex-col items-center mb-6">
           <div className="w-24 h-24 bg-[#007DFC] rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4">
-            {profile?.username?.charAt(0).toUpperCase() || 'U'}
+            {/* {profile?.username?.charAt(0).toUpperCase() || 'U'} */}
           </div>
         </div>
 
         <div className="space-y-4">
-          <div>
+          {/* <div>
             <label className="block text-gray-600 text-sm mb-1">Name</label>
             <div className="text-gray-800 font-medium">{profile?.name || 'Not set'}</div>
-          </div>
+            <div className="text-gray-800 font-medium">Arvin</div>
+          </div> */}
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Username</label>
-            <div className="text-gray-800 font-medium">{profile?.username || 'Not set'}</div>
+            <div className="text-gray-800 font-medium">Arvin</div>
+            {/* <div className="text-gray-800 font-medium">{profile?.username || 'Not set'}</div> */}
           </div>
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Email</label>
-            <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div>
+            <div className="text-gray-800 font-medium">arvin@gmail.com</div>
+            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
+          </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm mb-1">Umur</label>
+            <div className="text-gray-800 font-medium">17 Tahun</div>
+            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
+          </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm mb-1">Sex</label>
+            <div className="text-gray-800 font-medium">Laki-Laki</div>
+            {/* <div className="text-gray-800 font-medium">{user?.email || 'Not set'}</div> */}
           </div>
         </div>
 

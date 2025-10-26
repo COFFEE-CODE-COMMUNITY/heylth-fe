@@ -107,7 +107,7 @@ export const Register = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               required
             > 
-              <option value={'Selecting Sex'}  key={'Selecting Sex'} selected> Select your Sex:</option>
+              <option value={'Selecting Sex'}  key={'Selecting Sex'}> Select your Sex:</option>
               {jenisKelamin.map(jk => (
                 <option value={jk.value} key={jk.value}> {jk.label} </option>
               ))}

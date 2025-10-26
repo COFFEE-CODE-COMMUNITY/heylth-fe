@@ -19,7 +19,7 @@ export const Journal = () => {
 
   useEffect(() => {
     loadJournals();
-  }, [user]);
+  }, []);
 
   const loadJournals = async () => {
   //   try {
