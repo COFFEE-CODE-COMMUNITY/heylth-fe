@@ -5,7 +5,12 @@ export const getAllScreenTime = async () => {
     return res.data.data;
 };
 
+export const getAverageScreenTime = async () => {
+    const res = await api.get('/screenTime/average');
+    return res.data.data;
+};
+
 export const addScreenTime = async data => {
     const res = await api.post('/screenTime', data);
     return res.data.data;
-}
+};
