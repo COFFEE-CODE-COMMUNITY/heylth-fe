@@ -22,7 +22,6 @@ export const Login = () => {
 
     try {
       const userData = await userLogin(formData);
-      console.log(userData);
       localStorage.setItem('token', userData.data.user.token);
       localStorage.setItem('email', userData.data.user.email);
       localStorage.setItem('username', userData.data.user.username);
