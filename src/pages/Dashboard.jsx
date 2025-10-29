@@ -232,9 +232,7 @@ export const Dashboard = () => {
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               >
                 {[...Array(24)].map((_, i) => {
-                  // console.log(i);
                   const hour = 23 - i;
-                  // console.log(hour)
                   const formattedHour = hour.toString().padStart(2, '0');
                   return (
                     <option key={hour} value={`${formattedHour}`}>
