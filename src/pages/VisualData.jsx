@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getAverageSleep } from '../services/sleepTrackerService';
 import { countEatTracker } from '../services/eatTrackerService';
 import { getAverageScreenTime } from '../services/screenTimeTrackerService';
+import { getLifestyleStatus } from '../services/lifestyleStatusService';
 
 export const VisualData = () => {
   const [avgSleepHours, setAvgSleepHours] = useState(0);
@@ -14,23 +15,61 @@ export const VisualData = () => {
     averageSleepHours();
     countMeal();
     averageScreenTime();
+    lifestyleStatusSummary();
     // loadStatistics();
   }, []);
 
   const averageSleepHours = async () => {
-    const avgSleep = await getAverageSleep();
-    setAvgSleepHours(avgSleep.average_sleep);
+    try {
+      const avgSleep = await getAverageSleep();
+      if (avgSleep && avgSleep.average_sleep !== undefined) {
+        setAvgSleepHours(avgSleep.average_sleep);
+      } else {
+        setAvgSleepHours(0); // default jika data kosong
+      }
+    } catch (error) {
+      console.error("An error occured:", error.response.data.error);
+      setAvgSleepHours(0); // fallback biar UI tetap jalan
+    }
   };
-
+  
   const countMeal = async () => {
-    const meal = await countEatTracker();
-    setAvgMealsPerDay(meal.count_meal);
+    try {
+      const meal = await countEatTracker();
+      if (meal && meal.count_meal !== undefined) {
+        setAvgMealsPerDay(meal.count_meal);
+      } else {
+        setAvgMealsPerDay(0);
+      }
+    } catch (error) {
+      console.error("An error occured:", error.response.data.error);
+      setAvgMealsPerDay(0);
+    }
   };
-
+  
   const averageScreenTime = async () => {
-    const avgScreenTime = await getAverageScreenTime();
-    setAvgScreenTime(avgScreenTime.average_screen_time);
+    try {
+      const avgScreenTime = await getAverageScreenTime();
+      if (avgScreenTime && avgScreenTime.average_screen_time !== undefined) {
+        setAvgScreenTime(avgScreenTime.average_screen_time);
+      } else {
+        setAvgScreenTime(0);
+      }
+    } catch (error) {
+      console.error("An error occured:", error.response.data.error);
+      setAvgScreenTime(0);
+    }
   };
+  
+
+  const lifestyleStatusSummary = async () => {
+    try {
+      const lifestyle = await getLifestyleStatus();
+      setLifestyleStatus({ status: lifestyle.status, color: lifestyle.color });
+    } catch (error) {
+      setLifestyleStatus({ status: 'Data Is Not Exist', color: 'bg-gray-500' });
+    }
+  }
 
   const loadStatistics = async () => {
     // try {
@@ -57,21 +96,6 @@ export const VisualData = () => {
     // }
   };
 
-  const calculateLifestyleStatus = (sleep, meals, screen) => {
-    let score = 0;
-
-    if (sleep >= 7 && sleep <= 9) score += 1;
-    if (meals >= 3) score += 1;
-    if (screen <= 6) score += 1;
-
-    if (score === 3) {
-      setLifestyleStatus({ status: 'Good', color: 'bg-green-500' });
-    } else if (score === 2) {
-      setLifestyleStatus({ status: 'Average', color: 'bg-yellow-500' });
-    } else {
-      setLifestyleStatus({ status: 'Bad', color: 'bg-red-500' });
-    }
-  };
 
   // if (loading) {
   //   return (
