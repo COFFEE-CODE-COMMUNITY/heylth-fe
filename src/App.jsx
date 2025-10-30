@@ -28,8 +28,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route index element={<Navigate to="/login" replace />} />
+          <Route path="dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
           <Route path="profile" element={<Profile />} />
           <Route path="visual-data" element={<VisualData />} />
           <Route path="journal" element={<Journal />} />
