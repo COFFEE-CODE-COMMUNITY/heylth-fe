@@ -29,7 +29,8 @@ export const Login = () => {
       localStorage.setItem('sex', userData.data.user.sex);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Failed to login');
+      const errMsg = err?.response?.data?.error;
+      setError(errMsg); 
     } finally {
       setLoading(false);
     }
