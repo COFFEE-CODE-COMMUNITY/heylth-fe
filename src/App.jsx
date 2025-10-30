@@ -28,16 +28,32 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="/login" replace />} />
+          <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           } />
-          <Route path="profile" element={<Profile />} />
-          <Route path="visual-data" element={<VisualData />} />
-          <Route path="journal" element={<Journal />} />
-          <Route path="reminder" element={<Reminder />} />
+          <Route path="profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path="visual-data" element={
+            <ProtectedRoute>
+              <VisualData />
+            </ProtectedRoute>
+          } />
+          <Route path="journal" element={
+            <ProtectedRoute>
+              <Journal />
+            </ProtectedRoute>
+          } />
+          <Route path="reminder" element={
+            <ProtectedRoute>
+              <Reminder />
+            </ProtectedRoute>
+          } />
         </Route>
       </Routes>
     </Router>
