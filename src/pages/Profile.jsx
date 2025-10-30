@@ -139,11 +139,6 @@ export const Profile = () => {
         </div>
 
         <div className="space-y-4">
-          {/* <div>
-            <label className="block text-gray-600 text-sm mb-1">Name</label>
-            <div className="text-gray-800 font-medium">{profile?.name || 'Not set'}</div>
-            <div className="text-gray-800 font-medium">Arvin</div>
-          </div> */}
 
           <div>
             <label className="block text-gray-600 text-sm mb-1">Username</label>
