@@ -29,6 +29,7 @@ export const Journal = () => {
   const loadJournals = async () => {
     try {
       const res = await getAllJournal();
+      if (!res) return setJournals(null);
       setJournals(res);
     } catch (error) {
       const errMessage = error?.response?.data?.error;
@@ -109,7 +110,7 @@ export const Journal = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {journals.map((journal) => {
+        {journals?.map((journal) => {
           const moodInfo = getMoodInfo(journal.mood);
           return (
             <div key={journal.id} className="bg-white p-6 rounded-lg shadow">
@@ -134,7 +135,7 @@ export const Journal = () => {
         })}
       </div>
 
-      {journals.length === 0 && (
+      {!journals && (
         <div className="text-center text-gray-500 mt-12">
           No journal entries yet. Click the Add button to create one!
         </div>
