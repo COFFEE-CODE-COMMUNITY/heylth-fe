@@ -13,11 +13,13 @@ import { Profile } from "./pages/Profile";
 import { VisualData } from "./pages/VisualData";
 import { Journal } from "./pages/Journal";
 import { Reminder } from "./pages/Reminder";
+import { LandingPage } from "./pages/LandingPage";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/LandingPage" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
