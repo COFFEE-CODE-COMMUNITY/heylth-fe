@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { addSleepTracker, getAllSleepTracker } from '../services/sleepTrackerService';
 import { addEatTracker, getAllEatTracker } from '../services/eatTrackerService';
 import { addScreenTime, getAllScreenTime } from '../services/screenTimeTrackerService';
+import { createReminder } from '../services/reminderService';
 
 export const Dashboard = () => {
   const [sleep, setSleep] = useState({
@@ -145,58 +146,6 @@ export const Dashboard = () => {
       }, 3000);
       setScreenTime('');
     }
-  };
-
-
-  const generateReminder = async () => {
-    // try {
-    //   const today = new Date().toISOString().split('T')[0];
-
-    //   const { data: healthData } = await supabase
-    //     .from('daily_health_data')
-    //     .select('*')
-    //     .eq('user_id', user.id)
-    //     .eq('date', today)
-    //     .maybeSingle();
-
-    //   if (!healthData) return;
-
-    //   const sleepHours = healthData.sleep_hours || 0;
-    //   const mealsCount = healthData.meals?.length || 0;
-    //   const screenHours = healthData.screen_time_hours || 0;
-
-    //   const sleepStatus = sleepHours >= 8 ? 'good' : 'bad';
-    //   const sleepMessage = sleepHours >= 8
-    //     ? 'Jam tidur kamu sudah bagus, pertahankan!'
-    //     : 'Jam tidur kamu kurang, usahakan tidur lebih awal';
-
-    //   const mealsStatus = mealsCount >= 3 ? 'good' : 'bad';
-    //   const mealsMessage = mealsCount >= 3
-    //     ? 'Pola makan kamu bagus, pertahankan yaa!'
-    //     : 'Pola makan kamu hari ini kurang bagus, usahakan makan tepat waktu';
-
-    //   const screenStatus = screenHours <= 6 ? 'good' : 'bad';
-    //   const screenMessage = screenHours <= 6
-    //     ? 'Screen time kamu sudah bagus, pertahankan dan jangan lupa istirahatkan mata kamu'
-    //     : 'Screen time kamu terlalu banyak, istirahatkan mata kamu';
-
-    //   await supabase
-    //     .from('reminders')
-    //     .upsert({
-    //       user_id: user.id,
-    //       date: today,
-    //       sleep_status: sleepStatus,
-    //       sleep_message: sleepMessage,
-    //       meals_status: mealsStatus,
-    //       meals_message: mealsMessage,
-    //       screen_time_status: screenStatus,
-    //       screen_time_message: screenMessage,
-    //     }, {
-    //       onConflict: 'user_id,date'
-    //     });
-    // } catch (error) {
-    //   console.error('Error generating reminder:', error);
-    // }
   };
 
   return (
