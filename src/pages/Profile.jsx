@@ -135,7 +135,7 @@ export const Profile = () => {
   <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
 
       {/*tambahan gradasi*/}
-      <div className="w-full h-48 bg-gradient-to-b from-[#3D9AF7] via-[#f8fbff] to-[#FFFF]"/>
+      <div className="w-full h-48 bg-gradient-to-b from-[#3D9AF7] via-[#ffff] to-[#FFFF]"/>
 
 
     <div className="flex flex-col items-center mb-8">
@@ -180,6 +180,63 @@ export const Profile = () => {
     </div>
   );
 };
+//   return (
+//     <div className="max-w-2xl">
+//       <h1 className="text-3xl font-bold text-gray-800 mb-8">Profile</h1>
+
+// <div className="flex justify-center items-center">
+//   <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
+
+//       {/*tambahan gradasi*/}
+//       <div className="w-full h-48 bg-gradient-to-b from-[#3D9AF7] via-[#f8fbff] to-[#FFFF]"/>
+
+
+//     <div className="flex flex-col items-center mb-8">
+//       <div className="w-24 h-24 bg-gradient-to-tr from-[#007DFC] to-[#B3FFEA] rounded-full flex items-center justify-center text-white text-3xl font-bold">
+//         {username?.charAt(0).toUpperCase() || 'U'}
+//       </div>
+//       <p className="mt-3 text-gray-700 font-bold mb-1 bg-gradient-to-r from-[#002B56] to-[#004E9D] bg-clip-text text-transparent">{username}</p>
+//       <p className="text-gray-500 text-sm">{email}</p>
+//     </div>
+
+//     <div className="flex flex-col text-gray-700 space-y-4 items-start pl-10">
+//       <div>
+//         <label className="block text-sm text-gray-500 mb-1">Umur</label>
+//         <div className="font-medium">{age || 'Not set'} Tahun</div>
+//       </div>
+//       <div>
+//         <label className="block text-sm text-gray-500 mb-1">Jenis Kelamin</label>
+//         <div className="font-medium">{sex || 'Not set'}</div>
+//       </div>
+//     </div>
+
+//       <hr className="border-t border-gray-200 my-4"/>
+
+
+//     <div className="flex justify-end gap-4 mt-10">
+//       <button
+//         onClick={() => setShowChangePassword(true)}
+//         className="bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
+//       >
+//         Change Password
+//       </button>
+//       <button
+//         onClick={handleLogout}
+//         className="bg-gradient-to-r font-bold mr-5 mb-10 from-[#ff4b4b] to-[#ff7373] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
+//       >
+//         Logout
+
+//       </button>
+//     </div>
+//   </div>
+// </div>
+//     </div>
+//   );
+// };
+
+
+
+
 //   if (showChangePassword) {
 //     return (
 //       <div className="max-w-2xl">

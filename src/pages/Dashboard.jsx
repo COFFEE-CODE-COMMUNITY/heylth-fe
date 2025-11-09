@@ -267,7 +267,7 @@ export const Dashboard = () => {
 
         <button
           onClick={saveSleepData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>
@@ -295,7 +295,7 @@ export const Dashboard = () => {
 
         <button
           onClick={saveMealsData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>
@@ -321,7 +321,7 @@ export const Dashboard = () => {
 
         <button
           onClick={saveScreenTimeData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>

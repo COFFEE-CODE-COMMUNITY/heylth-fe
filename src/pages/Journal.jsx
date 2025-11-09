@@ -102,7 +102,7 @@ export const Journal = () => {
         <h1 className="text-3xl font-bold text-gray-800">Journal</h1>
         <button
           onClick={() => handleOpenModal()}
-          className="bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors"
+          className="bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
         >
           + Add
         </button>
@@ -141,8 +141,9 @@ export const Journal = () => {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-all duration-300">
+          <div className="bg-white rounded-xl p-6 shadow-lg 
+          scale-100 opacity-100 transition-all duration-300">
             <h2 className="text-2xl font-bold mb-4">
               {editingJournal ? "Edit Journal" : "Create Note"}
             </h2>
@@ -200,14 +201,14 @@ export const Journal = () => {
             <div className="flex gap-4 mt-6">
               <button
                 onClick={handleCloseModal}
-                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                className="flex-1 bg-gray-300 mr-2  mb-10 text-gray-700 px-1 py-3 rounded-lg hover:bg-gray-400 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={loading || !modalData.title}
-                className="flex-1 bg-[#007DFC] text-white py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+                className="flex-1 bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-1 py-3 rounded-lg shadow hover:opacity-90 transition transition-colors disabled:opacity-50"
               >
                 {loading
                   ? "Saving..."
