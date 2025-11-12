@@ -48,21 +48,21 @@ export const Profile = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut();
-      navigate('/login');
-    } catch (err) {
-      console.error('Error logging out:', err);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await signOut();
+  //     navigate('/login');
+  //   } catch (err) {
+  //     console.error('Error logging out:', err);
+  //   }
+  // };
 
   if (showChangePassword) {
     return (
       <div className="max-w-2xl">
         <h1 className="text-3xl font-bold text-gray-800 mb-8">Change Password</h1>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow bg-gradient-to-b from-[#E1F1FE] via-[#FFFFF] to-[#FFFF]">
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
               {error}
@@ -135,7 +135,7 @@ export const Profile = () => {
   <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
 
       {/*tambahan gradasi*/}
-      <div className="w-full h-48 bg-gradient-to-b from-[#3D9AF7] via-[#ffff] to-[#FFFF]"/>
+      <div className="w-full h-48 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]"/>
 
 
     <div className="flex flex-col items-center mb-8">
@@ -167,13 +167,13 @@ export const Profile = () => {
       >
         Change Password
       </button>
-      <button
+      {/* <button
         onClick={handleLogout}
         className="bg-gradient-to-r font-bold mr-5 mb-10 from-[#ff4b4b] to-[#ff7373] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
       >
         Logout
 
-      </button>
+      </button> */}
     </div>
   </div>
 </div>

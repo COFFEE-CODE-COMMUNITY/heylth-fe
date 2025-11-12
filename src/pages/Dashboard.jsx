@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { addSleepTracker, getAllSleepTracker } from '../services/sleepTrackerService';
 import { addEatTracker, getAllEatTracker } from '../services/eatTrackerService';
 import { addScreenTime, getAllScreenTime } from '../services/screenTimeTrackerService';
+import { GiNightSleep } from "react-icons/gi";
+import { GiKnifeFork } from "react-icons/gi";
+import { FaClock } from "react-icons/fa";
 
 export const Dashboard = () => {
   const [sleep, setSleep] = useState({
@@ -234,8 +237,13 @@ export const Dashboard = () => {
     <div className="space-y-8">
 
       {/* SLEEP SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">What Time Did You Sleep?</h2>
+      <div className="bg-white p-6 rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <GiNightSleep className="text-lg"/>
+          </span>  
+            What Time Did You Sleep?
+          </h2>
 
         <div className="space-y-4">
           <div>
@@ -289,8 +297,14 @@ export const Dashboard = () => {
       </div>
 
       {/* MEALS SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Which Meals Did You Have?</h2>
+      <div className="bg-white p-6 rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <GiKnifeFork className="text-lg"/> 
+          </span>  
+            Which Meals Did You Have?
+        </h2>
+
 
         <div className="flex flex-wrap gap-3">
           {['Breakfast', 'Lunch', 'Dinner'].map((m) => (
@@ -317,9 +331,12 @@ export const Dashboard = () => {
       </div>
 
       {/* SCREEN TIME SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">
-          How Many Hours Did You Spend on Screen?
+      <div className="bg-white p-6 rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <FaClock className="text-lg"/>
+          </span>  
+            How Many Hours Did You Spend on Screen?
         </h2>
 
         <div className="flex items-center gap-3">

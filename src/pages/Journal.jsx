@@ -3,10 +3,10 @@ import { addJournal, getAllJournal } from "../services/journalTrackerService";
 import { useNavigate } from "react-router-dom";
 
 const moodOptions = [
-  { value: "very_happy", label: "Very Happy", emoji: "😄" },
+  { value: "very_happy", label: "I'm Very Happy!", emoji: "😄", color: "text-yellow-500" },
   { value: "happy", label: "Happy", emoji: "😊" },
   { value: "neutral", label: "Neutral", emoji: "😐" },
-  { value: "sad", label: "Sad", emoji: "😢" },
+  { value: "sad", label: "Not So Good..", emoji: "😢" },
   { value: "angry", label: "Angry", emoji: "😠" },
 ];
 
@@ -142,7 +142,7 @@ export const Journal = () => {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-all duration-300">
-          <div className="bg-white rounded-xl p-6 shadow-lg 
+          <div className="bg-white rounded-xl p-6 shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF] 
           scale-100 opacity-100 transition-all duration-300">
             <h2 className="text-2xl font-bold mb-4">
               {editingJournal ? "Edit Journal" : "Create Note"}
@@ -161,14 +161,36 @@ export const Journal = () => {
                     <button
                       key={option.value}
                       value={option.value}
-                      onClick={(e) => handleChange("mood", e.target.value)}
+                      onClick={() => handleChange("mood", option.value)}
                       className={`p-3 rounded-lg border-2 transition-colors ${
                         modalData.mood === option.value
                           ? "border-[#007DFC] bg-blue-50"
                           : "border-gray-300 hover:border-gray-400"
                       }`}
                     >
-                      <div className="text-2xl">{option.emoji}</div>
+                      {/* <div className="text-2xl">{option.emoji}</div> */}
+                          <div
+                            className={`text-2xl transition-transform duration-300 pointer-events-none ${
+                              modalData.mood === option.value
+                                ? option.value === "very_happy"
+                                  ? "scale-125 animate-bounce"
+                                  : option.value === "happy"
+                                  ? "scale-125 animate-pulse"
+                                  : option.value === "neutral"
+                                  ? "scale-110 opacity-90"
+                                  : option.value === "sad"
+                                  ? "scale-110 animate-wiggle"
+                                  : option.value === "angry"
+                                  ? "scale-125 animate-shake"
+                                  : "scale-100"
+                                : "scale-100"
+                            }`}
+                          >
+                {option.emoji}
+              </div>
+
+
+
                       <div className="text-xs mt-1">{option.label}</div>
                     </button>
                   ))}

@@ -9,6 +9,15 @@ export const Layout = () => {
     { path: '/reminder', label: 'Reminder' },
   ];
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (err) {
+      console.error('Error logging out:', err);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-[#fffafa] pl-64">
       <aside className="w-64 h-screen fixed left-0 top-0 bg-white shadow-lg overflow-y-auto">
@@ -32,6 +41,15 @@ export const Layout = () => {
             </NavLink>
           ))}
         </nav>
+        
+      <div className="p-6">
+          <button
+            onClick={handleLogout}
+            className="bg-gradient-to-r font-bold mt-105 mr-5 mb-10 from-[#ff4b4b] to-[#ff7373] text-white px-10 py-3 rounded-lg shadow hover:opacity-90 transition"
+      >
+            Logout
+          </button>
+      </div>
       </aside>
 
       <main className="flex-1 p-8 h-screen overflow-y-auto">
