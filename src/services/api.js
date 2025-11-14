@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https:api.heylth.space/api',
+    baseURL: 'https://api.heylth.space/api',
 });
 
 api.interceptors.request.use(config => {
