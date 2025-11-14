@@ -49,7 +49,6 @@ export const Dashboard = () => {
       setCountDinner(meal.countDinner);
     } catch (error) {
       console.error("An error occured:", error.response.data.error);
-      // set(0);
     }
   };
 
