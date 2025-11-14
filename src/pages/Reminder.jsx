@@ -12,22 +12,13 @@ export const Reminder = () => {
   const loadReminders = async () => {
     try {
       const res = await findUserReminder();
+      console.log(res);
       setReminders(res || []);
     } catch (error) {
       console.error("An error occured:", error.response.data.error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   if (loading) {
@@ -51,7 +42,7 @@ export const Reminder = () => {
           {reminders?.map((reminder) => (
             <div key={reminder.id} className="bg-white p-6 rounded-lg shadow">
               <h2 className="text-xl font-bold text-gray-800 mb-4">
-                {reminder.createdAt.split('T')[0]}
+                {reminder.dayText}, {reminder.dayNumber} {reminder.month} {reminder.year}
               </h2>
 
               <div className="space-y-3">

@@ -15,6 +15,7 @@ export const InputData = () => {
     const [screenTime, setScreenTime] = useState('');
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
+    const [date, setDate] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -131,7 +132,6 @@ export const InputData = () => {
         }
     };
 
-    const [date, setDate] = useState('');
     <input
         type="date"
         value={date}
