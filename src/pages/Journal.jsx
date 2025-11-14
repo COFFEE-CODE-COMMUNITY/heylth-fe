@@ -231,7 +231,7 @@ export const Journal = () => {
               <button
                 onClick={handleSubmit}
                 disabled={loading || !modalData.title}
-                className="flex-1 bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-1 py-3 rounded-lg shadow hover:opacity-90 transition transition-colors disabled:opacity-50"
+                className="flex-1 bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-1 py-3 rounded-lg shadow hover:opacity-90 transition-colors disabled:opacity-50"
               >
                 {loading
                   ? "Saving..."

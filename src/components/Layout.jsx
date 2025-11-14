@@ -3,10 +3,10 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 export const Layout = () => {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard' },
-    { path: '/profile', label: 'Profile' },
-    { path: '/visual-data', label: 'Visual Data' },
+    { path: '/input-data', label: 'Input Data' },
     { path: '/journal', label: 'Journal' },
     { path: '/reminder', label: 'Reminder' },
+    { path: '/profile', label: 'Profile' },
   ];
 
   const navigate = useNavigate()

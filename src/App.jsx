@@ -10,7 +10,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Dashboard } from "./pages/Dashboard";
 import { Profile } from "./pages/Profile";
-import { VisualData } from "./pages/VisualData";
+import { InputData } from "./pages/InputData";
 import { Journal } from "./pages/Journal";
 import { Reminder } from "./pages/Reminder";
 import { LandingPage } from "./pages/LandingPage";
@@ -41,9 +41,9 @@ function App() {
               <Profile />
             </ProtectedRoute>
           } />
-          <Route path="visual-data" element={
+          <Route path="input-data" element={
             <ProtectedRoute>
-              <VisualData />
+              <InputData />
             </ProtectedRoute>
           } />
           <Route path="journal" element={
