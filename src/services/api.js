@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://147.139.188.116:3000/api',
-    // baseURL: 'http://localhost:3000/api',
+    baseURL: 'https:api.heylth.space/api',
 });
 
 api.interceptors.request.use(config => {
