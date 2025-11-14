@@ -12,11 +12,9 @@ export const Reminder = () => {
   const loadReminders = async () => {
     try {
       const res = await findUserReminder();
-      console.log(res);
       setReminders(res || []);
     } catch (error) {
-      console.log(error);
-      // console.error('Error loading reminders:', error);
+      console.error("An error occured:", error.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -72,7 +70,7 @@ export const Reminder = () => {
                 {reminder.eatMessage && (
                   <div
                     className={`p-4 rounded-lg ${
-                      reminder.eatMessage.toLowerCase() === 'good'
+                      reminder.eatStatus.toLowerCase() === 'good'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
