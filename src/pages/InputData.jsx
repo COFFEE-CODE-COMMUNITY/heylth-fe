@@ -19,13 +19,15 @@ export const InputData = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [sleepData, eatDAData, screeData] = await Promise.all([
+                const [sleepData, eatData, screeData] = await Promise.all([
                     getAllSleepTracker(),
                     getAllEatTracker(),
                     getAllScreenTime(),
                 ]);
 
                 setSleepStart(sleepData);
+                setMeal(eatData);
+                setScreenTime(screenTime);
 
             } catch (error) {
 
@@ -33,31 +35,6 @@ export const InputData = () => {
         };
         fetchData();
     }, []);
-
-    const loadTodayData = async () => {
-        // try {
-        //   const today = new Date().toISOString().split('T')[0];
-        //   const { data, error } = await supabase
-        //     .from('daily_health_data')
-        //     .select('*')
-        //     .eq('user_id', user.id)
-        //     .eq('date', today)
-        //     .maybeSingle();
-
-        //   if (error) throw error;
-
-        //   if (data) {
-        //     setSleepStart(data.sleep_start || '');
-        //     setSleepStartPeriod(data.sleep_start_period || 'PM');
-        //     setSleepEnd(data.sleep_end || '');
-        //     setSleepEndPeriod(data.sleep_end_period || 'AM');
-        //     setMeals(data.meals || []);
-        //     setScreenTime(data.screen_time_hours || '');
-        //   }
-        // } catch (error) {
-        //   console.error('Error loading data:', error);
-        // }
-    };
 
     const handleChange = (field, value) => {
         setSleep(prev => ({ ...prev, [field]: value }));
@@ -83,7 +60,6 @@ export const InputData = () => {
                 sleep_start: 23,
                 sleep_end: 0,
             });
-            // generateReminder();
         } catch (error) {
             const errMessage = error?.response?.data?.error || 'Error saving sleep data!';
             setMessage(errMessage);
@@ -115,7 +91,6 @@ export const InputData = () => {
             }, 3000);
 
             setMeal('');
-            // generateReminder();
         } catch (error) {
             const errMessage = error?.response?.data?.error || 'Error saving meal data!';
             setMessage(errMessage);
@@ -144,7 +119,6 @@ export const InputData = () => {
             }, 3000);
 
             setScreenTime('');
-            // generateReminder();
         } catch (error) {
             const errMessage = error?.response?.data?.error || 'Error saving meal data!';
             setMessage(errMessage);
@@ -164,58 +138,6 @@ export const InputData = () => {
         onChange={(e) => setDate(e.target.value)}
         className="px-4 py-2 border-gray-300 rounder-lg focus:outline-none focus:border-[#007DFC]"
     />
-
-
-    const generateReminder = async () => {
-        // try {
-        //   const today = new Date().toISOString().split('T')[0];
-
-        //   const { data: healthData } = await supabase
-        //     .from('daily_health_data')
-        //     .select('*')
-        //     .eq('user_id', user.id)
-        //     .eq('date', today)
-        //     .maybeSingle();
-
-        //   if (!healthData) return;
-
-        //   const sleepHours = healthData.sleep_hours || 0;
-        //   const mealsCount = healthData.meals?.length || 0;
-        //   const screenHours = healthData.screen_time_hours || 0;
-
-        //   const sleepStatus = sleepHours >= 8 ? 'good' : 'bad';
-        //   const sleepMessage = sleepHours >= 8
-        //     ? 'Jam tidur kamu sudah bagus, pertahankan!'
-        //     : 'Jam tidur kamu kurang, usahakan tidur lebih awal';
-
-        //   const mealsStatus = mealsCount >= 3 ? 'good' : 'bad';
-        //   const mealsMessage = mealsCount >= 3
-        //     ? 'Pola makan kamu bagus, pertahankan yaa!'
-        //     : 'Pola makan kamu hari ini kurang bagus, usahakan makan tepat waktu';
-
-        //   const screenStatus = screenHours <= 6 ? 'good' : 'bad';
-        //   const screenMessage = screenHours <= 6
-        //     ? 'Screen time kamu sudah bagus, pertahankan dan jangan lupa istirahatkan mata kamu'
-        //     : 'Screen time kamu terlalu banyak, istirahatkan mata kamu';
-
-        //   await supabase
-        //     .from('reminders')
-        //     .upsert({
-        //       user_id: user.id,
-        //       date: today,
-        //       sleep_status: sleepStatus,
-        //       sleep_message: sleepMessage,
-        //       meals_status: mealsStatus,
-        //       meals_message: mealsMessage,
-        //       screen_time_status: screenStatus,
-        //       screen_time_message: screenMessage,
-        //     }, {
-        //       onConflict: 'user_id,date'
-        //     });
-        // } catch (error) {
-        //   console.error('Error generating reminder:', error);
-        // }
-    };
 
     return (
         <div className="max-w-3xl">

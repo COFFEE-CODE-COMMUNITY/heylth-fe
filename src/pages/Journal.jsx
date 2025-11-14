@@ -180,7 +180,7 @@ export const Journal = () => {
                                   : option.value === "neutral"
                                   ? "scale-110 opacity-90"
                                   : option.value === "sad"
-                                  ? "scale-110 animate-wiggle"
+                                  ? "scale-125 animate-wiggle"
                                   : option.value === "angry"
                                   ? "scale-125 animate-shake"
                                   : "scale-100"
