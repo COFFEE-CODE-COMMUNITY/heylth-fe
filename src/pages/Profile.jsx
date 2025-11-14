@@ -133,7 +133,7 @@ export const Profile = () => {
       <div className="w-24 h-24 bg-gradient-to-tr from-[#007DFC] to-[#B3FFEA] rounded-full flex items-center justify-center text-white text-3xl font-bold">
         {username?.charAt(0).toUpperCase() || 'U'}
       </div>
-      <p className="mt-3 text-gray-700 font-bold mb-1 bg-gradient-to-r from-[#002B56] to-[#004E9D] bg-clip-text text-transparent">{username}</p>
+      <p className="mt-3 text-gray-700 font-bold mb-1 bg-gradient-to-r from-[#002B56] to-[#004E9D] bg-clip-text">{username}</p>
       <p className="text-gray-500 text-sm">{email}</p>
     </div>
 
