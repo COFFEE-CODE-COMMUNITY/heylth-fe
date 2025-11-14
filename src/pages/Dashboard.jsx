@@ -98,7 +98,7 @@ export const Dashboard = () => {
           </h1>
           <div className="grid grid-cols-3 gap-4">
             {/* Breakfast */}
-            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+            <div className="bg-white p-4 rounded-lg shadow-mb">
               <h2 className="text-lg text-gray-600 mb-2">☀️Breakfast</h2>
               <div className="text-3xl font-bold text-[#007DFC]">
                 {countBreakfast}
@@ -107,7 +107,7 @@ export const Dashboard = () => {
             </div>
 
             {/* Lunch */}
-            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+            <div className="bg-white p-4 rounded-lg shadow-mb">
               <h2 className="text-lg text-gray-600 mb-2">🥪Lunch</h2>
               <div className="text-3xl font-bold text-[#007DFC]">
                 {countLunch}
@@ -116,7 +116,7 @@ export const Dashboard = () => {
             </div>
 
             {/* Dinner */}
-            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+            <div className="bg-white p-4 rounded-lg shadow-mb">
               <h2 className="text-lg text-gray-600 mb-2">🌙Dinner</h2>
               <div className="text-3xl font-bold text-[#007DFC]">
                 {countDinner}

@@ -114,6 +114,9 @@ export const Journal = () => {
           const moodInfo = getMoodInfo(journal.mood);
           return (
             <div key={journal.id} className="bg-white p-6 rounded-lg shadow">
+              <p className="block text-gray-700 mb-2">
+                Senin, 23 Desember 2025
+              </p>
               <div className="text-4xl mb-2">{moodInfo.emoji}</div>
               <div className="text-lg font-semibold text-[#007DFC] mb-2">
                 {moodInfo.label}
@@ -163,32 +166,30 @@ export const Journal = () => {
                       key={option.value}
                       value={option.value}
                       onClick={() => handleChange("mood", option.value)}
-                      className={`p-3 rounded-lg border-2 transition-colors ${
-                        modalData.mood === option.value
+                      className={`p-3 rounded-lg border-2 transition-colors ${modalData.mood === option.value
                           ? "border-[#007DFC] bg-blue-50"
                           : "border-gray-300 hover:border-gray-400"
-                      }`}
+                        }`}
                     >
                       {/* <div className="text-2xl">{option.emoji}</div> */}
-                          <div
-                            className={`text-2xl transition-transform duration-300 pointer-events-none ${
-                              modalData.mood === option.value
-                                ? option.value === "very_happy"
-                                  ? "scale-125 animate-bounce"
-                                  : option.value === "happy"
-                                  ? "scale-125 animate-pulse"
-                                  : option.value === "neutral"
+                      <div
+                        className={`text-2xl transition-transform duration-300 pointer-events-none ${modalData.mood === option.value
+                            ? option.value === "very_happy"
+                              ? "scale-125 animate-bounce"
+                              : option.value === "happy"
+                                ? "scale-125 animate-pulse"
+                                : option.value === "neutral"
                                   ? "scale-110 opacity-90"
                                   : option.value === "sad"
-                                  ? "scale-125 animate-wiggle"
-                                  : option.value === "angry"
-                                  ? "scale-125 animate-shake"
-                                  : "scale-100"
-                                : "scale-100"
-                            }`}
-                          >
-                {option.emoji}
-              </div>
+                                    ? "scale-125 animate-wiggle"
+                                    : option.value === "angry"
+                                      ? "scale-125 animate-shake"
+                                      : "scale-100"
+                            : "scale-100"
+                          }`}
+                      >
+                        {option.emoji}
+                      </div>
 
 
 
@@ -236,8 +237,8 @@ export const Journal = () => {
                 {loading
                   ? "Saving..."
                   : editingJournal
-                  ? "Save Changes"
-                  : "Create Note"}
+                    ? "Save Changes"
+                    : "Create Note"}
               </button>
             </div>
           </div>
