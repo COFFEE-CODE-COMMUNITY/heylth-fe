@@ -12,7 +12,6 @@ export const Reminder = () => {
   const loadReminders = async () => {
     try {
       const res = await findUserReminder();
-      console.log(res);
       setReminders(res || []);
     } catch (error) {
       console.error("An error occured:", error.response.data.error);

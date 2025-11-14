@@ -115,7 +115,7 @@ export const Journal = () => {
           return (
             <div key={journal.id} className="bg-white p-6 rounded-lg shadow">
               <p className="block text-gray-700 mb-2">
-                Senin, 23 Desember 2025
+                {journal.dayText}, {journal.dayNumber} {journal.month} {journal.year}
               </p>
               <div className="text-4xl mb-2">{moodInfo.emoji}</div>
               <div className="text-lg font-semibold text-[#007DFC] mb-2">
@@ -171,7 +171,7 @@ export const Journal = () => {
                           : "border-gray-300 hover:border-gray-400"
                         }`}
                     >
-                      {/* <div className="text-2xl">{option.emoji}</div> */}
+                      <div className="text-2xl">{option.emoji}</div>
                       <div
                         className={`text-2xl transition-transform duration-300 pointer-events-none ${modalData.mood === option.value
                             ? option.value === "very_happy"
@@ -190,9 +190,6 @@ export const Journal = () => {
                       >
                         {option.emoji}
                       </div>
-
-
-
                       <div className="text-xs mt-1">{option.label}</div>
                     </button>
                   ))}
