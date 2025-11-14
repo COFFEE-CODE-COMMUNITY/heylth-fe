@@ -3,10 +3,10 @@ import { addJournal, getAllJournal } from "../services/journalTrackerService";
 import { useNavigate } from "react-router-dom";
 
 const moodOptions = [
-  { value: "very_happy", label: "Very Happy", emoji: "😄" },
+  { value: "very_happy", label: "I'm Very Happy!", emoji: "😄", color: "text-yellow-500" },
   { value: "happy", label: "Happy", emoji: "😊" },
   { value: "neutral", label: "Neutral", emoji: "😐" },
-  { value: "sad", label: "Sad", emoji: "😢" },
+  { value: "sad", label: "Not So Good..", emoji: "😢" },
   { value: "angry", label: "Angry", emoji: "😠" },
 ];
 
@@ -103,7 +103,7 @@ export const Journal = () => {
         <h1 className="text-3xl font-bold text-gray-800">Journal</h1>
         <button
           onClick={() => handleOpenModal()}
-          className="bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors"
+          className="bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
         >
           + Add
         </button>
@@ -142,8 +142,9 @@ export const Journal = () => {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-all duration-300">
+          <div className="bg-white rounded-xl p-6 shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF] 
+          scale-100 opacity-100 transition-all duration-300">
             <h2 className="text-2xl font-bold mb-4">
               {editingJournal ? "Edit Journal" : "Create Note"}
             </h2>
@@ -161,14 +162,36 @@ export const Journal = () => {
                     <button
                       key={option.value}
                       value={option.value}
-                      onClick={(e) => handleChange("mood", e.target.value)}
+                      onClick={() => handleChange("mood", option.value)}
                       className={`p-3 rounded-lg border-2 transition-colors ${
                         modalData.mood === option.value
                           ? "border-[#007DFC] bg-blue-50"
                           : "border-gray-300 hover:border-gray-400"
                       }`}
                     >
-                      <div className="text-2xl">{option.emoji}</div>
+                      {/* <div className="text-2xl">{option.emoji}</div> */}
+                          <div
+                            className={`text-2xl transition-transform duration-300 pointer-events-none ${
+                              modalData.mood === option.value
+                                ? option.value === "very_happy"
+                                  ? "scale-125 animate-bounce"
+                                  : option.value === "happy"
+                                  ? "scale-125 animate-pulse"
+                                  : option.value === "neutral"
+                                  ? "scale-110 opacity-90"
+                                  : option.value === "sad"
+                                  ? "scale-110 animate-wiggle"
+                                  : option.value === "angry"
+                                  ? "scale-125 animate-shake"
+                                  : "scale-100"
+                                : "scale-100"
+                            }`}
+                          >
+                {option.emoji}
+              </div>
+
+
+
                       <div className="text-xs mt-1">{option.label}</div>
                     </button>
                   ))}
@@ -201,14 +224,14 @@ export const Journal = () => {
             <div className="flex gap-4 mt-6">
               <button
                 onClick={handleCloseModal}
-                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                className="flex-1 bg-gray-300 mr-2  mb-10 text-gray-700 px-1 py-3 rounded-lg hover:bg-gray-400 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={loading || !modalData.title}
-                className="flex-1 bg-[#007DFC] text-white py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+                className="flex-1 bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-1 py-3 rounded-lg shadow hover:opacity-90 transition transition-colors disabled:opacity-50"
               >
                 {loading
                   ? "Saving..."

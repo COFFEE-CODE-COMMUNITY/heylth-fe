@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { addSleepTracker, getAllSleepTracker } from '../services/sleepTrackerService';
 import { addEatTracker, getAllEatTracker } from '../services/eatTrackerService';
 import { addScreenTime, getAllScreenTime } from '../services/screenTimeTrackerService';
-import { createReminder } from '../services/reminderService';
+import { GiNightSleep } from "react-icons/gi";
+import { GiKnifeFork } from "react-icons/gi";
+import { FaClock } from "react-icons/fa";
 
 export const Dashboard = () => {
   const [sleep, setSleep] = useState({
@@ -66,6 +68,7 @@ export const Dashboard = () => {
       const data = {
         sleep_start: parseInt(sleep.sleep_start),
         sleep_end: parseInt(sleep.sleep_end),
+        date: date,
       };
       
       await addSleepTracker(data);
@@ -98,7 +101,10 @@ export const Dashboard = () => {
 
   const saveMealsData = async () => {
     try {
-      const data = { meal_type: meal };
+      const data = {
+        meal_type: meal,
+        date: date,
+      };
       
       await addEatTracker(data);
       setMessage('Meal data saved!');
@@ -124,7 +130,10 @@ export const Dashboard = () => {
 
   const saveScreenTimeData = async () => {
     try {
-      const data = { duration: parseInt(screenTime) };
+      const data = {
+        duration: parseInt(screenTime),
+        date: date,
+      };
       
       await addScreenTime(data);
       setMessage('Screen time data saved!');
@@ -148,6 +157,66 @@ export const Dashboard = () => {
     }
   };
 
+  const [date, setDate] = useState('');
+  <input
+    type      = "date"
+    value     = {date}
+    onChange  = {(e) => setDate(e.target.value)}
+    className = "px-4 py-2 border-gray-300 rounder-lg focus:outline-none focus:border-[#007DFC]"
+  />
+
+
+  const generateReminder = async () => {
+    // try {
+    //   const today = new Date().toISOString().split('T')[0];
+
+    //   const { data: healthData } = await supabase
+    //     .from('daily_health_data')
+    //     .select('*')
+    //     .eq('user_id', user.id)
+    //     .eq('date', today)
+    //     .maybeSingle();
+
+    //   if (!healthData) return;
+
+    //   const sleepHours = healthData.sleep_hours || 0;
+    //   const mealsCount = healthData.meals?.length || 0;
+    //   const screenHours = healthData.screen_time_hours || 0;
+
+    //   const sleepStatus = sleepHours >= 8 ? 'good' : 'bad';
+    //   const sleepMessage = sleepHours >= 8
+    //     ? 'Jam tidur kamu sudah bagus, pertahankan!'
+    //     : 'Jam tidur kamu kurang, usahakan tidur lebih awal';
+
+    //   const mealsStatus = mealsCount >= 3 ? 'good' : 'bad';
+    //   const mealsMessage = mealsCount >= 3
+    //     ? 'Pola makan kamu bagus, pertahankan yaa!'
+    //     : 'Pola makan kamu hari ini kurang bagus, usahakan makan tepat waktu';
+
+    //   const screenStatus = screenHours <= 6 ? 'good' : 'bad';
+    //   const screenMessage = screenHours <= 6
+    //     ? 'Screen time kamu sudah bagus, pertahankan dan jangan lupa istirahatkan mata kamu'
+    //     : 'Screen time kamu terlalu banyak, istirahatkan mata kamu';
+
+    //   await supabase
+    //     .from('reminders')
+    //     .upsert({
+    //       user_id: user.id,
+    //       date: today,
+    //       sleep_status: sleepStatus,
+    //       sleep_message: sleepMessage,
+    //       meals_status: mealsStatus,
+    //       meals_message: mealsMessage,
+    //       screen_time_status: screenStatus,
+    //       screen_time_message: screenMessage,
+    //     }, {
+    //       onConflict: 'user_id,date'
+    //     });
+    // } catch (error) {
+    //   console.error('Error generating reminder:', error);
+    // }
+  };
+
   return (
   <div className="max-w-3xl">
     <h1 className="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
@@ -168,8 +237,13 @@ export const Dashboard = () => {
     <div className="space-y-8">
 
       {/* SLEEP SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">What Time Did You Sleep?</h2>
+      <div className="bg-white rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <GiNightSleep className="text-lg"/>
+          </span>  
+            What Time Did You Sleep?
+          </h2>
 
         <div className="space-y-4">
           <div>
@@ -216,15 +290,21 @@ export const Dashboard = () => {
 
         <button
           onClick={saveSleepData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>
       </div>
 
       {/* MEALS SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Which Meals Did You Have?</h2>
+      <div className="bg-white rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <GiKnifeFork className="text-lg"/> 
+          </span>  
+            Which Meals Did You Have?
+        </h2>
+
 
         <div className="flex flex-wrap gap-3">
           {['Breakfast', 'Lunch', 'Dinner'].map((m) => (
@@ -244,16 +324,19 @@ export const Dashboard = () => {
 
         <button
           onClick={saveMealsData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>
       </div>
 
       {/* SCREEN TIME SECTION */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">
-          How Many Hours Did You Spend on Screen?
+      <div className="bg-white rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">
+            <FaClock className="text-lg"/>
+          </span>  
+            How Many Hours Did You Spend on Screen?
         </h2>
 
         <div className="flex items-center gap-3">
@@ -270,7 +353,7 @@ export const Dashboard = () => {
 
         <button
           onClick={saveScreenTimeData}
-          className="mt-4 bg-[#007DFC] text-white px-6 py-2 rounded-lg hover:bg-[#0066cc] transition-colors disabled:opacity-50"
+          className="bg-gradient-to-r font-bold mr-2 mt-13 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-3 rounded-lg shadow hover:opacity-90 transition"
         >
           Save
         </button>

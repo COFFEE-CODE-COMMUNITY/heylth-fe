@@ -67,7 +67,7 @@ export const VisualData = () => {
       const lifestyle = await getLifestyleStatus();
       setLifestyleStatus({ status: lifestyle.status, color: lifestyle.color });
     } catch (error) {
-      setLifestyleStatus({ status: 'Data Is Not Exist', color: 'bg-gray-500' });
+      setLifestyleStatus({ status: 'Data Does Not Exist', color: 'bg-gray-500' });
     }
   }
 
@@ -109,26 +109,26 @@ export const VisualData = () => {
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Visual Data</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg text-gray-600 mb-2">Average Sleep Hours</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-lg text-gray-600 mb-2">💤Average Sleep Hours</h2>
           <div className="text-4xl font-bold text-[#007DFC]">{avgSleepHours}</div>
           <div className="text-gray-500 mt-1">hours per night</div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg text-gray-600 mb-2">Average Meals Per Day</h2>
+        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-lg text-gray-600 mb-2">🍴Average Meals Per Day</h2>
           <div className="text-4xl font-bold text-[#007DFC]">{avgMealsPerDay}</div>
           <div className="text-gray-500 mt-1">meals daily</div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg text-gray-600 mb-2">Average Screen Time</h2>
+        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-lg text-gray-600 mb-2">⌛Average Screen Time</h2>
           <div className="text-4xl font-bold text-[#007DFC]">{avgScreenTime}</div>
           <div className="text-gray-500 mt-1">hours per day</div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
           <h2 className="text-lg text-gray-600 mb-2">Lifestyle Status</h2>
           <div className={`inline-block px-6 py-3 rounded-lg ${lifestyleStatus.color} text-white text-2xl font-bold mt-2`}>
             {lifestyleStatus.status}
