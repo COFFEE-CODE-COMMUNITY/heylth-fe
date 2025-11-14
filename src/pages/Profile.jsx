@@ -48,15 +48,6 @@ export const Profile = () => {
     }
   };
 
-  // const handleLogout = async () => {
-  //   try {
-  //     await signOut();
-  //     navigate('/login');
-  //   } catch (err) {
-  //     console.error('Error logging out:', err);
-  //   }
-  // };
-
   if (showChangePassword) {
     return (
       <div className="max-w-2xl">
