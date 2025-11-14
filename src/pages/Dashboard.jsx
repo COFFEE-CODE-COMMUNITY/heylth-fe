@@ -68,10 +68,11 @@ export const Dashboard = () => {
       const data = {
         sleep_start: parseInt(sleep.sleep_start),
         sleep_end: parseInt(sleep.sleep_end),
-        date: date,
+        date: new Date(),
       };
-      
+
       await addSleepTracker(data);
+
       setMessage('Sleep data saved!');
       setMessageType('success');
       setTimeout(() => {
@@ -103,7 +104,7 @@ export const Dashboard = () => {
     try {
       const data = {
         meal_type: meal,
-        date: date,
+        date: new Date(),
       };
       
       await addEatTracker(data);
@@ -132,7 +133,7 @@ export const Dashboard = () => {
     try {
       const data = {
         duration: parseInt(screenTime),
-        date: date,
+        date: new Date(),
       };
       
       await addScreenTime(data);
@@ -146,6 +147,7 @@ export const Dashboard = () => {
       setScreenTime('');
       // generateReminder();
     } catch (error) {
+      console.log(error);
       const errMessage = error?.response?.data?.error || 'Error saving meal data!';
       setMessage(errMessage);
       setMessageType('error');
@@ -157,13 +159,13 @@ export const Dashboard = () => {
     }
   };
 
-  const [date, setDate] = useState('');
-  <input
-    type      = "date"
-    value     = {date}
-    onChange  = {(e) => setDate(e.target.value)}
-    className = "px-4 py-2 border-gray-300 rounder-lg focus:outline-none focus:border-[#007DFC]"
-  />
+  // const [date, setDate] = useState('');
+  // <input
+  //   type      = "date"
+  //   value     = {date}
+  //   onChange  = {(e) => setDate(e.target.value)}
+  //   className = "px-4 py-2 border-gray-300 rounder-lg focus:outline-none focus:border-[#007DFC]"
+  // />
 
 
   const generateReminder = async () => {

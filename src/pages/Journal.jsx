@@ -29,6 +29,7 @@ export const Journal = () => {
   const loadJournals = async () => {
     try {
       const res = await getAllJournal();
+      console.log(res);
       if (!res) return setJournals(null);
       setJournals(res);
     } catch (error) {
