@@ -296,7 +296,7 @@ export const Dashboard = () => {
         </button>
       </div>
 
-      {/* MEALS SECTION */}
+      {/*  SECTION */}
       <div className="bg-white rounded-xl shadow-md p-8 bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <span className="p-2 bg-[#E6F0FF] rounded-full text-[#007DFC] shadow-sm">

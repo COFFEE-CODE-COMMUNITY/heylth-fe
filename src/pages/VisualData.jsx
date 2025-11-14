@@ -109,32 +109,62 @@ export const VisualData = () => {
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Visual Data</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
-          <h2 className="text-lg text-gray-600 mb-2">💤Average Sleep Hours</h2>
-          <div className="text-4xl font-bold text-[#007DFC]">{avgSleepHours}</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* Average Sleep */}
+        <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-lg text-gray-600 mb-2">💤 Average Sleep Hours</h2>
+          <div className="text-3xl font-bold text-[#007DFC]">{avgSleepHours}</div>
           <div className="text-gray-500 mt-1">hours per night</div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
-          <h2 className="text-lg text-gray-600 mb-2">🍴Average Meals Per Day</h2>
-          <div className="text-4xl font-bold text-[#007DFC]">{avgMealsPerDay}</div>
-          <div className="text-gray-500 mt-1">meals daily</div>
+        {/* Header Average Meals (pindah ke bawah sleep) */}
+        <div>
+          <h1 className="text-xl mb-5 font-bold text-blue-400">🍴 Average Meals Per Day</h1>
+          
+          {/* Breakfast, Lunch, Dinner dalam 1 baris */}
+          <div className="grid grid-cols-3 gap-4">
+
+            {/* Breakfast */}
+            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+              <h2 className="text-lg text-gray-600 mb-2">☀️Breakfast</h2>
+              <div className="text-3xl font-bold text-[#007DFC]">{avgMealsPerDay}</div>
+              <div className="text-gray-500 mt-1">meals daily</div>
+            </div>
+
+            {/* Lunch */}
+            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+              <h2 className="text-lg text-gray-600 mb-2">🥪Lunch</h2>
+              <div className="text-3xl font-bold text-[#007DFC]">{avgMealsPerDay}</div>
+              <div className="text-gray-500 mt-1">meals daily</div>
+            </div>
+
+            {/* Dinner */}
+            <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+              <h2 className="text-lg text-gray-600 mb-2">🌙Dinner</h2>
+              <div className="text-3xl font-bold text-[#007DFC]">{avgMealsPerDay}</div>
+              <div className="text-gray-500 mt-1">meals daily</div>
+            </div>
+
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
-          <h2 className="text-lg text-gray-600 mb-2">⌛Average Screen Time</h2>
+        {/* Screen Time */}
+        <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-lg text-gray-600 mb-2">⌛ Average Screen Time</h2>
           <div className="text-4xl font-bold text-[#007DFC]">{avgScreenTime}</div>
           <div className="text-gray-500 mt-1">hours per day</div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+        {/* Lifestyle Status */}
+        <div className="bg-white p-4 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
           <h2 className="text-lg text-gray-600 mb-2">Lifestyle Status</h2>
-          <div className={`inline-block px-6 py-3 rounded-lg ${lifestyleStatus.color} text-white text-2xl font-bold mt-2`}>
+          <div className={`inline-block px-4 py-2 rounded-lg ${lifestyleStatus.color} text-white text-xl font-bold mt-2`}>
             {lifestyleStatus.status}
           </div>
         </div>
+
       </div>
-    </div>
-  );
-};
+          </div>
+        );
+      };

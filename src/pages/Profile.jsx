@@ -163,7 +163,7 @@ export const Profile = () => {
     <div className="flex justify-end gap-4 mt-10">
       <button
         onClick={() => setShowChangePassword(true)}
-        className="bg-gradient-to-r font-bold mr-2 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
+        className="bg-gradient-to-r font-bold mr-8 mb-10 from-[#007DFC] to-[#00C4FF] text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition"
       >
         Change Password
       </button>
