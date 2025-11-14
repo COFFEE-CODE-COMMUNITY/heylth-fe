@@ -1,41 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+import { findUserReminder } from '../services/reminderService';
 
 export const Reminder = () => {
-  const { user } = useAuth();
   const [reminders, setReminders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadReminders();
-  }, [user]);
+  }, []);
 
   const loadReminders = async () => {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('date', { ascending: false });
-
-      if (error) throw error;
-      setReminders(data || []);
+      const res = await findUserReminder();
+      setReminders(res || []);
     } catch (error) {
-      console.error('Error loading reminders:', error);
+      console.error("An error occured:", error.response.data.error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   if (loading) {
@@ -56,46 +38,46 @@ export const Reminder = () => {
         </div>
       ) : (
         <div className="space-y-8">
-          {reminders.map((reminder) => (
+          {reminders?.map((reminder) => (
             <div key={reminder.id} className="bg-white p-6 rounded-lg shadow">
               <h2 className="text-xl font-bold text-gray-800 mb-4">
-                {formatDate(reminder.date)}
+                {reminder.dayText}, {reminder.dayNumber} {reminder.month} {reminder.year}
               </h2>
 
               <div className="space-y-3">
-                {reminder.sleep_message && (
+                {reminder.sleepMessage && (
                   <div
                     className={`p-4 rounded-lg ${
-                      reminder.sleep_status === 'good'
+                      reminder.sleepStatus.toLowerCase() === 'good'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
                   >
-                    {reminder.sleep_message}
+                    {reminder.sleepMessage}
                   </div>
                 )}
 
-                {reminder.meals_message && (
+                {reminder.eatMessage && (
                   <div
                     className={`p-4 rounded-lg ${
-                      reminder.meals_status === 'good'
+                      reminder.eatStatus.toLowerCase() === 'good'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
                   >
-                    {reminder.meals_message}
+                    {reminder.eatMessage}
                   </div>
                 )}
 
-                {reminder.screen_time_message && (
+                {reminder.screenTimeMessage && (
                   <div
                     className={`p-4 rounded-lg ${
-                      reminder.screen_time_status === 'good'
+                      reminder.screenTimeStatus.toLowerCase() === 'good'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
                   >
-                    {reminder.screen_time_message}
+                    {reminder.screenTimeMessage}
                   </div>
                 )}
               </div>

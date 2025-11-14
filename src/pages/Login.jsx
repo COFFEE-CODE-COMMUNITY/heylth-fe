@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { userLogin } from '../services/authService';
 
 export const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({...prev, [field]: value}));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,10 +21,16 @@ export const Login = () => {
     setLoading(true);
 
     try {
-      await signIn(username, password);
+      const userData = await userLogin(formData);
+      localStorage.setItem('token', userData.data.user.token);
+      localStorage.setItem('email', userData.data.user.email);
+      localStorage.setItem('username', userData.data.user.username);
+      localStorage.setItem('age', userData.data.user.age);
+      localStorage.setItem('sex', userData.data.user.sex);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Failed to login');
+      const errMsg = err?.response?.data?.error;
+      setError(errMsg); 
     } finally {
       setLoading(false);
     }
@@ -46,8 +57,8 @@ export const Login = () => {
             <input
               type="text"
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={formData.username}
+              onChange={e => handleChange('username', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               required
             />
@@ -60,8 +71,8 @@ export const Login = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={e => handleChange('password', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#007DFC]"
               required
             />
