@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import ProfilePic from '../assets/NicoDashLogo.png'
+import ProfilePic from '../assets/heylth-icon.png';
 
 export const LandingPage = () => {
     const heroRef = useRef(null);
