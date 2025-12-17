@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { getAverageSleep } from "../services/sleepTrackerService";
 import { countEatTracker } from "../services/eatTrackerService";
-import { getAverageScreenTime, lineChartScreenTime } from "../services/screenTimeTrackerService";
+import {
+  getAverageScreenTime,
+  lineChartScreenTime,
+} from "../services/screenTimeTrackerService";
 import { getLifestyleStatus } from "../services/lifestyleStatusService";
 import {
   LineChart,
@@ -25,14 +28,12 @@ export const Dashboard = () => {
   });
   const [screenTimeChart, setScreenTimeChart] = useState([]);
 
-
   useEffect(() => {
     averageSleepHours();
     countMeal();
     averageScreenTime();
     lifestyleStatusSummary();
-  fetchLineChart();
-
+    fetchLineChart();
   }, []);
 
   const fetchLineChart = async () => {
@@ -167,24 +168,24 @@ export const Dashboard = () => {
       {/* SCREEN TIME LINE CHART */}
       <br />
       <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
-          <h2 className="text-xl font-semibold mb-6">Screen Time Trend</h2>
+        <h2 className="text-lg font-bold text-black-600 mb-2">Screen Time Trend</h2>
 
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={screenTimeChart}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="duration"
-                stroke="#007DFC"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={screenTimeChart}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="duration"
+              stroke="#007DFC"
+              strokeWidth={2}
+              dot={{ r: 4 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

@@ -27,7 +27,7 @@ export const Login = () => {
       localStorage.setItem('username', userData.data.user.username);
       localStorage.setItem('age', userData.data.user.age);
       localStorage.setItem('sex', userData.data.user.sex);
-      navigate('/dashboard');
+      navigate('/app/dashboard');
     } catch (err) {
       const errMsg = err?.response?.data?.error;
       setError(errMsg); 
