@@ -1,8 +1,17 @@
 import { useState, useEffect } from "react";
 import { getAverageSleep } from "../services/sleepTrackerService";
 import { countEatTracker } from "../services/eatTrackerService";
-import { getAverageScreenTime } from "../services/screenTimeTrackerService";
+import { getAverageScreenTime, lineChartScreenTime } from "../services/screenTimeTrackerService";
 import { getLifestyleStatus } from "../services/lifestyleStatusService";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 export const Dashboard = () => {
   const [avgSleepHours, setAvgSleepHours] = useState(0);
@@ -14,13 +23,26 @@ export const Dashboard = () => {
     status: "Average",
     color: "bg-yellow-500",
   });
+  const [screenTimeChart, setScreenTimeChart] = useState([]);
+
 
   useEffect(() => {
     averageSleepHours();
     countMeal();
     averageScreenTime();
     lifestyleStatusSummary();
+  fetchLineChart();
+
   }, []);
+
+  const fetchLineChart = async () => {
+    try {
+      const res = await lineChartScreenTime();
+      setScreenTimeChart(res);
+    } catch (error) {
+      console.error("Failed to fetch line chart data", error);
+    }
+  };
 
   const averageSleepHours = async () => {
     try {
@@ -39,7 +61,7 @@ export const Dashboard = () => {
   const countMeal = async () => {
     try {
       const meal = await countEatTracker();
-      if(!meal) {
+      if (!meal) {
         setCountBreakfast(0);
         setCountLunch(0);
         setCountDinner(0);
@@ -142,6 +164,27 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
+      {/* SCREEN TIME LINE CHART */}
+      <br />
+      <div className="bg-white p-6 rounded-lg shadow-mb bg-gradient-to-b from-[#E1F1FE] via-[#FAFCFF] to-[#FFFF]">
+          <h2 className="text-xl font-semibold mb-6">Screen Time Trend</h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={screenTimeChart}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="duration"
+                stroke="#007DFC"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
     </div>
   );
 };
