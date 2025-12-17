@@ -12,6 +12,7 @@ import { GiNightSleep } from "react-icons/gi";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaClock } from "react-icons/fa";
 
+
 export const InputData = () => {
   const [sleep, setSleep] = useState({
     sleep_start: 23,
@@ -22,6 +23,7 @@ export const InputData = () => {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
   const [dateInput, setDateInput] = useState("");
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +39,7 @@ export const InputData = () => {
         setScreenTime(screenData);
       } catch (error) {}
     };
+
     fetchData();
   }, []);
 
